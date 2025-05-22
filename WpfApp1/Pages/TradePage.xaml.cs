@@ -26,7 +26,7 @@ namespace WpfApp1.Pages
             InitializeComponent();
 
             // Загрузка данных о сделках в DataGrid
-            dataGrid.ItemsSource = DBEntities.GetContext().Trade.ToList();
+            dataGrid.ItemsSource = LobanovEntities.GetContext().Trade.ToList();
         }
 
         /// <summary>

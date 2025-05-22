@@ -48,7 +48,7 @@ namespace WpfApp1.Pages
             InitializeComponent();
 
             // Заполнение ComboBox ролями из базы данных
-            CmbBox.ItemsSource = DBEntities.GetContext().Role.Select(x => x.RoleName).ToList();
+            CmbBox.ItemsSource = LobanovEntities.GetContext().Role.Select(x => x.RoleName).ToList();
 
             if (client != null)
             {
@@ -137,10 +137,28 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            var context = DBEntities.GetContext();
+            var context = LobanovEntities.GetContext();
             // Проверка на уникальность логина
-            bool isLoginExists = context.Client.Any(x => x.Login == Login_TextBox.Text) ||
-                                 context.Rieltor.Any(x => x.Login == Login_TextBox.Text);
+            bool isLoginExists = false;
+
+            if (isEdit)
+            {
+                if (CmbBox.SelectedIndex == 0) // редактируем клиента
+                {
+                    isLoginExists = context.Client.Any(x => x.Login == Login_TextBox.Text && x.ID != _client.ID) ||
+                                    context.Rieltor.Any(x => x.Login == Login_TextBox.Text);
+                }
+                else if (CmbBox.SelectedIndex == 1) // редактируем риелтора
+                {
+                    isLoginExists = context.Client.Any(x => x.Login == Login_TextBox.Text) ||
+                                    context.Rieltor.Any(x => x.Login == Login_TextBox.Text && x.ID != _rieltor.ID);
+                }
+            }
+            else
+            {
+                isLoginExists = context.Client.Any(x => x.Login == Login_TextBox.Text) ||
+                                context.Rieltor.Any(x => x.Login == Login_TextBox.Text);
+            }
 
             if (isLoginExists)
             {
@@ -207,7 +225,7 @@ namespace WpfApp1.Pages
         /// </summary>
         private void AddClient()
         {
-            var context = DBEntities.GetContext();
+            var context = LobanovEntities.GetContext();
 
             // Создание объекта клиента
             Client client = new Client
@@ -255,7 +273,7 @@ namespace WpfApp1.Pages
         /// </summary>
         private void EditClient()
         {
-            var context = DBEntities.GetContext();
+            var context = LobanovEntities.GetContext();
 
             // Обновление данных клиента
             _client.SName = SName_TextBox.Text;
@@ -292,7 +310,7 @@ namespace WpfApp1.Pages
         /// </summary>
         private void AddRieltor()
         {
-            var context = DBEntities.GetContext();
+            var context = LobanovEntities.GetContext();
 
             // Создание объекта риелтора
             Rieltor rieltor = new Rieltor
@@ -339,7 +357,7 @@ namespace WpfApp1.Pages
         /// </summary>
         private void EditRieltor()
         {
-            var context = DBEntities.GetContext();
+            var context = LobanovEntities.GetContext();
 
             // Обновление данных риелтора
             _rieltor.SName = SName_TextBox.Text;

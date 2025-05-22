@@ -28,7 +28,7 @@ namespace WpfApp1.AppData
         public int Part { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-
+    
         /// <summary>
         /// Свойство, возвращающее ФИО клиента в формате "Фамилия И.О.".
         /// Например, для клиента с фамилией "Иванов", именем "Иван" и отчеством "Иванович"

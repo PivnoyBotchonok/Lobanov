@@ -11,8 +11,7 @@ namespace WpfApp1.AppData
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class Trade
     {
         public int ID { get; set; }
@@ -50,7 +49,7 @@ namespace WpfApp1.AppData
                 }
             }
         }
-
+    
         public virtual Flat Flat { get; set; }
         public virtual House House { get; set; }
         public virtual Region Region { get; set; }
